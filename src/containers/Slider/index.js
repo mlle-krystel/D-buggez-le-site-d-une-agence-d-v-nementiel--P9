@@ -7,33 +7,36 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
-  const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    // new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
 
-  // Correction du plus ancien au plus récent
-  new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
+  // Tri chronologique du plus ancien au plus récent
+  const byDateAsc = data?.focus.sort((evtA, evtB) =>
+    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
   );
-  
-  const nextCard = () => {
-    setTimeout(
-() => setIndex(index < byDateDesc.length ? index + 1 : 0),
-      5000
-    );
-  };
+
   useEffect(() => {
-    nextCard();
-  });
+    // setTimeout renvoie un ID numérique qu'on peut annuler avec clearTimeout
+    const timeoutId = setTimeout(() => {
+      setIndex((prevIndex) =>
+        prevIndex + 1 === byDateAsc.length ? 0 : prevIndex + 1
+      );
+    }, 5000);
+
+    // Nettoyage pour éviter plusieurs timers en parallèle
+    return () => clearTimeout(timeoutId);
+  }, [index, byDateAsc.length]);
+
   return (
     <div className="SlideCardList">
-      {byDateDesc?.map((event, idx) => (
-        <>
+      {byDateAsc?.map((event, idx) => (
+        <div key={event.title}>
           <div
-            key={event.title}
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
           >
-            <img src={event.cover} alt="forum" />
+            {/* Protection contre les images vides */}
+            {event.cover && <img src={event.cover} alt={event.title} />}
+
             <div className="SlideCard__descriptionContainer">
               <div className="SlideCard__description">
                 <h3>{event.title}</h3>
@@ -42,19 +45,25 @@ const Slider = () => {
               </div>
             </div>
           </div>
+
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">
-              {byDateDesc.map((_, radioIdx) => (
+              {/* Slides triées du plus ancien au plus récent */}
+              {byDateAsc.map((eventRadio, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                  // id comme key unique donc identifiant de l'événement
+                  key={eventRadio.id}
                   type="radio"
                   name="radio-button"
-                  checked={idx === radioIdx}
+                  // index est la slide actuellement affichée et radioIdx est la position dans la boucle
+                  checked={index === radioIdx}
+                  // readOnly pour éviter les interactions manuelles
+                  readOnly
                 />
               ))}
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
