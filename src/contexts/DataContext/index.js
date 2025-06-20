@@ -31,12 +31,18 @@ export const DataProvider = ({ children }) => {
     getData();
   });
   
+  // Récuperation de la dernière prestation
+   const last = data?.events?.[data.events.length - 1];
+
   return (
     <DataContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         data,
         error,
+
+        // Rajout de la variable last
+        last,
       }}
     >
       {children}

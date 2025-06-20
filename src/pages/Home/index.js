@@ -116,6 +116,9 @@ const Page = () => {
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
+
+        {/* Si last est "null", rien n'est rendu */}
+        {last && (
         <EventCard
           imageSrc={last?.cover}
           title={last?.title}
@@ -123,6 +126,8 @@ const Page = () => {
           small
           label="boom"
         />
+        )}
+
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>

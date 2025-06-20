@@ -4,13 +4,15 @@ import { getMonth } from "../../helpers/Date";
 import "./style.scss";
 
 const EventCard = ({
-  imageSrc,
-  imageAlt,
+  imageSrc ,
+  imageAlt = "image",
   date = new Date(),
   title,
   label,
   small = false,
   ...props
+
+ 
 }) => (
     <div
       data-testid="card-testid"

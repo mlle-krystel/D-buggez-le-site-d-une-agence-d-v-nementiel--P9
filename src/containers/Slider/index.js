@@ -40,7 +40,8 @@ const Slider = () => {
 
         return (
           <div
-key={`slide-${event.id}`}
+key={`slide-${event.id ?? idx}`}
+
             className={`SlideCard SlideCard--${isVisible ? "display" : "hide"}`}
           >
             <img src={event.cover} alt={event.title} />
@@ -60,7 +61,7 @@ key={`slide-${event.id}`}
           {byDateAsc.map((event, idx) => (
             <input
               // clé unique, stable, liée à la donnée
-               key={`radio-${event.id}`}
+              key={`radio-${event.id ?? idx}`}
               type="radio"
               name="radio-button"
               // idx est le vrai index courant du `map`

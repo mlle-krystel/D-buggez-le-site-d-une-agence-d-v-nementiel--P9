@@ -39,16 +39,19 @@ const Select = ({
                   Toutes
                 </li>
               )}
-              {selection.map((s) => (
-                <li key={s} onClick={() => changeValue(s)}>
-                  <input
-                    defaultChecked={value === s}
-                    name="selected"
-                    type="radio"
-                  />{" "}
-                  {s}
-                </li>
-              ))}
+             {selection.map((s) => (
+
+              // radio-${s || "default"} pour garantir une clé unique
+  <li key={`radio-${s || "default"}`} onClick={() => changeValue(s)}>
+    <input
+      defaultChecked={value === s}
+      name="selected"
+      type="radio"
+    />{" "}
+    {s}
+  </li>
+))}
+
             </>
           )}
         </ul>
