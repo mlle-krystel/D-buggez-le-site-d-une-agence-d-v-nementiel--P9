@@ -18,13 +18,7 @@ const Form = ({ onSuccess, onError }) => {
         setSending(false);
 
         // Appel de onSuccess 
-        onSuccess({
-          email : "",
-          nom: "",
-          prenom: "",
-          message: "",
-          type: "Personel",
-        });
+        onSuccess();
 
       } catch (err) {
         setSending(false);
