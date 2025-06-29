@@ -13,7 +13,8 @@ const Select = ({
   label,
   type = "normal",
 }) => {
-  const [value, setValue] = useState();
+  // Initialisé à null pour éviter l'erreur de valeur non définie
+  const [value, setValue] = useState(null);
   const [collapsed, setCollapsed] = useState(true);
 
 
@@ -21,7 +22,8 @@ const Select = ({
     // onChange(); = erreur
     onChange(newValue);
     setValue(newValue);
-    setCollapsed(newValue);
+    // On referme le menu après la selection
+    setCollapsed(true);
   };
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
@@ -34,7 +36,8 @@ const Select = ({
           {!collapsed && (
             <>
               {!titleEmpty && (
-                <li onClick={() => changeValue(null)}>
+                <li 
+                onClick={() => changeValue(null)}>
                   <input defaultChecked={!value} name="selected" type="radio" />{" "}
                   Toutes
                 </li>
