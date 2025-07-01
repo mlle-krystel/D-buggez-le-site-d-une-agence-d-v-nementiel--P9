@@ -66,6 +66,7 @@ key={`slide-${event.id ?? idx}`}
               name="radio-button"
               // idx est le vrai index courant du `map`
               checked={index === idx}
+              onChange={() => null}
               // // readOnly pour éviter les interactions utilisateur
               // readOnly
             />
