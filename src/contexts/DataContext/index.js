@@ -32,7 +32,8 @@ export const DataProvider = ({ children }) => {
   });
   
   // Récuperation de la dernière prestation
-   const last = data?.events?.[data.events.length - 1];
+   const last = data?.events?.slice()?.sort((a, b) => new Date(b.date) - new Date(a.date))?.[0];
+
 
   return (
     <DataContext.Provider
